@@ -3,7 +3,7 @@
 Plugin Name: Mcl Clean head
 Plugin URI: http://memocarilog.info/
 Description: Clean tag in HTML head
-Text Domain: mcl_clean_head
+Text Domain: MclCleanHead
 Domain Path: /languages
 Version: 0.1
 Author: Saori Miyazaki
@@ -33,7 +33,7 @@ function mcl_cleanhead_action_links( $links, $file ) {
 	if ( plugin_basename( __FILE__ ) == $file ) {
 		$settings_link = sprintf( '<a href="%1$s">%2$s</a>', 
 		admin_url( 'options-general.php?page=mcl-clean-head.php' ), 
-		__( 'Settings' , 'mcl_clean_head' ) );
+		__( 'Settings' , 'MclCleanHead' ) );
 		array_unshift( $links, $settings_link );
 	}
 	return $links;
@@ -53,13 +53,23 @@ function mcl_clean_head_option_init() {
 add_action( 'admin_init', 'mcl_clean_head_option_init' );
 
 /* -----------------------------------------------------------
+	テキストドメイン読み込み 
+----------------------------------------------------------- */
+function mcl_clean_head_textdomain() {
+	load_plugin_textdomain( 'MclCleanHead', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' ); 
+}
+add_action( 'plugins_loaded', 'mcl_clean_head_textdomain' );
+
+/* load_plugin_textdomain('MclCleanHead', false, basename( dirname( __FILE__ ) ) . '/languages' ); */
+
+/* -----------------------------------------------------------
 	管理画面メニューへメニュー項目を追加
 ----------------------------------------------------------- */
 add_action( 'admin_menu', 'mcl_add_admin_menu' );
 function mcl_add_admin_menu() {
 	add_options_page(
-		__( 'Cleanhead Setting', 'mcl_clean_head' ),
-		__( 'Cleanhead Setting', 'mcl_clean_head' ),
+		__( 'Cleanhead Setting', 'MclCleanHead' ),
+		__( 'Cleanhead Setting', 'MclCleanHead' ),
 		'manage_options',
 		'mcl-clean-head.php',
 		'mcl_clean_head_admin' // 定義した関数を呼び出し
@@ -83,8 +93,8 @@ add_action( 'admin_enqueue_scripts', 'mcl_admin_style' );
 function mcl_clean_head_admin(){ ?>
 	
 	<div class="wrap">
-	<h2><?php _e( 'Mcl Cleanhead Setting', 'mcl_clean_head' ); ?></h2>
-	<p><?php _e( 'Please save the settings and put a check on the tag you want to display.', 'mcl_clean_head' ); ?><!-- デフォルト時は以下のタグが HTML head 内より除去されています。<br />表示したいタグにはチェックを入れて設定を保存してください。 --></p>
+	<h2><?php _e( 'Mcl Cleanhead Setting', 'MclCleanHead' ); ?></h2>
+	<p><?php _e( 'Please save the settings and put a check on the tag you want to Output.', 'MclCleanHead' ); ?><!-- デフォルト時は以下のタグが HTML head 内より除去されています。<br />表示したいタグにはチェックを入れて設定を保存してください。 --></p>
 	
 	<div class="postbox">
 	
@@ -92,8 +102,6 @@ function mcl_clean_head_admin(){ ?>
 	<?php // nonce を発行
 		wp_nonce_field( 'mcl_head_clean_options', 'mcl_head_clean_nonce' ); 
 		$options = get_option( 'mcl_head_clean_option' );	
-		
-		var_dump($options);
 		
 		// チェックボックスを定義
 		function mcl_clean_head_checkbox( $options, $label, $name ){ ?>
@@ -106,60 +114,60 @@ function mcl_clean_head_admin(){ ?>
 				
 		<table class="mcl_clean_head_table inside">
 			<tr>
-				<th><?php _e( 'Display meta tag generator', 'mcl_clean_head' ); ?></th>
+				<th><?php _e( 'Output meta tag generator', 'MclCleanHead' ); ?></th>
 				<td>
 				<?php
-					$label = __( 'Display meta tag generator', 'mcl_clean_head' );
+					$label = __( 'Output meta tag generator', 'MclCleanHead' );
 					$name = 'mcl_hc_generator';
 					mcl_clean_head_checkbox( $options, $label, $name);
 				?>	
 				</td>
 			</tr>
 			<tr>
-				<th><?php _e( 'Display link tag EditURI', 'mcl_clean_head' ); ?></th>
+				<th><?php _e( 'Output link tag for EditURI', 'MclCleanHead' ); ?></th>
 				<td>
 				<?php
-					$label = __( 'Display link tag EditURI application/rsd+xml', 'mcl_clean_head' );
+					$label = __( 'Output link tag for EditURI application/rsd+xml', 'MclCleanHead' );
 					$name = 'mcl_hc_rsdxml';
 					mcl_clean_head_checkbox( $options, $label, $name);
 				?>	
 				</td>
 			</tr>
 			<tr>
-				<th><?php _e( 'Display link tag wlwmanifest', 'mcl_clean_head' ); ?></th>
+				<th><?php _e( 'Output link tag for wlwmanifest', 'MclCleanHead' ); ?></th>
 				<td>
 				<?php
-					$label = __( 'Display link tag wlwmanifest application/wlwmanifest+xml', 'mcl_clean_head' );;
+					$label = __( 'Output link tag for wlwmanifest application/wlwmanifest+xml', 'MclCleanHead' );;
 					$name = 'mcl_hc_wlwmanifest';
 					mcl_clean_head_checkbox( $options, $label, $name);
 				?>	
 				</td>
 			</tr>
 			<tr>
-				<th><?php _e( 'Display link tag stylesheet for open-sans', 'mcl_clean_head' ); ?></th>
+				<th><?php _e( 'Output link tag stylesheet for open-sans', 'MclCleanHead' ); ?></th>
 				<td>
 				<?php
-					$label = __( 'Display link tag stylesheet for open-sans', 'mcl_clean_head' );
+					$label = __( 'Output link tag stylesheet for open-sans', 'MclCleanHead' );
 					$name = 'mcl_hc_opensans';
 					mcl_clean_head_checkbox( $options, $label, $name);
 				?>	
 				</td>
 			</tr>
 			<tr>
-				<th><?php _e( 'Display style tag for recentcomments', 'mcl_clean_head' ); ?></th>
+				<th><?php _e( 'Output style tag for recentcomments', 'MclCleanHead' ); ?></th>
 				<td>
 				<?php
-					$label = __( 'Display style tag for recentcomments', 'mcl_clean_head' );
+					$label = __( 'Output style tag for recentcomments', 'MclCleanHead' );
 					$name = 'mcl_hc_comments_style';
 					mcl_clean_head_checkbox( $options, $label, $name);
 				?>	
 				</td>
 			</tr>
 			<tr>
-				<th><?php _e( 'Display style tag and script for emoji', 'mcl_clean_head' ); ?></th>
+				<th><?php _e( 'Output style tag and script for emoji', 'MclCleanHead' ); ?></th>
 				<td>
 				<?php
-					$label = __( 'Display style tag and script for emoji', 'mcl_clean_head' );
+					$label = __( 'Output style tag and script for emoji', 'MclCleanHead' );
 					$name = 'mcl_hc_print_emoji';
 					mcl_clean_head_checkbox( $options, $label, $name);
 				?>	
@@ -213,7 +221,7 @@ function mcl_head_clean_update(){
 ----------------------------------------------------------- */
 function my_admin_notice() { ?>
     <div class="updated">
-        <p><?php _e( 'Updated!', 'mcl_clean_head' ); ?></p>
+        <p><?php _e( 'Updated!', 'MclCleanHead' ); ?></p>
     </div>
 <?php
 }

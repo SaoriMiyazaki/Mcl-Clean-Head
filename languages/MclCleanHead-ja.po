@@ -1,0 +1,87 @@
+# MclCleanHead
+# Copyright (C) 2015 Saori Miyazaki
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: MclCleanHead\n"
+"Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
+"POT-Creation-Date: 2015-09-27 20:15+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: Saori Miyazaki <saomocari@gmail.com>\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
+"_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Generator: Poedit 1.8.5\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: mcl-clean-head.php:36
+msgid "Settings"
+msgstr "設定"
+
+#: mcl-clean-head.php:71 mcl-clean-head.php:72
+msgid "Cleanhead Setting"
+msgstr "Cleanhead 設定"
+
+#: mcl-clean-head.php:96
+msgid "Mcl Cleanhead Setting"
+msgstr "Mcl Cleanhead 設定"
+
+#: mcl-clean-head.php:97
+msgid "Please save the settings and put a check on the tag you want to Output."
+msgstr ""
+"デフォルト時は以下のタグが HTML head 内より除去されています。<br />表示したい"
+"タグにはチェックを入れて設定を保存してください。"
+
+#: mcl-clean-head.php:117 mcl-clean-head.php:120
+msgid "Output meta tag generator"
+msgstr "generator のための meta タグを出力する"
+
+#: mcl-clean-head.php:127
+msgid "Output link tag for EditURI"
+msgstr "EditURI のための link タグを出力する"
+
+#: mcl-clean-head.php:130
+msgid "Output link tag for EditURI application/rsd+xml"
+msgstr "EditURI のための link タグを出力する"
+
+#: mcl-clean-head.php:137
+msgid "Output link tag for wlwmanifest"
+msgstr "wlwmanifest のための link タグを出力する"
+
+#: mcl-clean-head.php:140
+msgid "Output link tag for wlwmanifest application/wlwmanifest+xml"
+msgstr "wlwmanifest ための link タグを出力する"
+
+#: mcl-clean-head.php:147 mcl-clean-head.php:150
+msgid "Output link tag stylesheet for open-sans"
+msgstr "open-sans を使うための stylesheet タグを出力する"
+
+#: mcl-clean-head.php:157 mcl-clean-head.php:160
+msgid "Output style tag for recentcomments"
+msgstr "recentcomments のための style タグを出力する"
+
+#: mcl-clean-head.php:167 mcl-clean-head.php:170
+msgid "Output style tag and script for emoji"
+msgstr "絵文字を使うための style タグ と script タグを出力する"
+
+#: mcl-clean-head.php:224
+msgid "Updated!"
+msgstr "保存しました！"
+
+#~ msgid ""
+#~ "Please save the settings and put a check on the tag you want to display."
+#~ msgstr ""
+#~ "デフォルト時は以下のタグが HTML head 内より除去されています。<br />表示し"
+#~ "たいタグにはチェックを入れて設定を保存してください。"
+
+#~ msgid "Display meta tag generator"
+#~ msgstr "generator メタタグを出力する"
