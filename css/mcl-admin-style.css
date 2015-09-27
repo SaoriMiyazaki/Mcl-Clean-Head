@@ -1,0 +1,17 @@
+.postbox{
+	margin-top: 30px;
+}
+#mcl_clean_head_form{
+	padding: 15px;
+}
+.mcl_clean_head_table th{
+	width: 25%;
+	text-align: left;
+}
+.mcl_clean_head_table th, td{
+	padding: 15px 20px 15px 0 ;
+}
+.checkbox label{
+	display: inline-block;
+	padding-right: 5px;
+}

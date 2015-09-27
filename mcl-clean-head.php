@@ -40,6 +40,17 @@ function mcl_cleanhead_action_links( $links, $file ) {
 }
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'mcl_cleanhead_action_links', 10, 2 );
 
+/* -----------------------------------------------------------
+	アンインストール時のオプションデータ削除 
+----------------------------------------------------------- */
+function mcl_clean_head_uninstall() {
+	delete_option( 'mcl_head_clean_option' );
+}
+
+function mcl_clean_head_option_init() {
+	register_uninstall_hook( __FILE__, 'mcl_clean_head_uninstall' );
+}
+add_action( 'admin_init', 'mcl_clean_head_option_init' );
 
 /* -----------------------------------------------------------
 	管理画面メニューへメニュー項目を追加
@@ -56,100 +67,108 @@ function mcl_add_admin_menu() {
 }
 
 /* -----------------------------------------------------------
+	管理画面 CSS ファイル読み込み 
+----------------------------------------------------------- */
+function mcl_admin_style($hook) {
+    if ( 'settings_page_mcl-clean-head' != $hook ) {
+        return;
+    }
+    wp_enqueue_style( 'mcl_head_clean_style', plugin_dir_url( __FILE__ ) . 'css/mcl-admin-style.css' );
+}
+add_action( 'admin_enqueue_scripts', 'mcl_admin_style' );
+
+/* -----------------------------------------------------------
 	管理画面を作成する関数を定義
 ----------------------------------------------------------- */
 function mcl_clean_head_admin(){ ?>
 	
 	<div class="wrap">
-	<?php 
-			echo '<pre>';
-			var_dump( $_POST );
-			echo '</pre>';
-			
-			$optionstest = get_option( 'mcl_head_clean_option' );
-			var_dump( $optionstest );
-		?>
 	<h2><?php _e( 'Mcl Cleanhead Setting', 'mcl_clean_head' ); ?></h2>
+	<p><?php _e( 'Please save the settings and put a check on the tag you want to display.', 'mcl_clean_head' ); ?><!-- デフォルト時は以下のタグが HTML head 内より除去されています。<br />表示したいタグにはチェックを入れて設定を保存してください。 --></p>
+	
+	<div class="postbox">
+	
 	<form id="mcl_clean_head_form" method="post" action="">
 	<?php // nonce を発行
 		wp_nonce_field( 'mcl_head_clean_options', 'mcl_head_clean_nonce' ); 
 		$options = get_option( 'mcl_head_clean_option' );	
-	
+		
+		var_dump($options);
+		
 		// チェックボックスを定義
 		function mcl_clean_head_checkbox( $options, $label, $name ){ ?>
 			<p class="checkbox">
-				<label for="<?php echo esc_attr( $name ); ?>"><?php echo esc_attr( $label ); ?></label>
 				<input id="<?php echo esc_attr( $name ); ?>" type="checkbox" name="<?php echo esc_attr( $name ); ?>" value="1" <?php echo !empty( $options[$name] ) ? 'checked': '' ; ?> />
-				
+				<label for="<?php echo esc_attr( $name ); ?>"><?php echo esc_attr( $label ); ?></label>
 			</p>
 		<?php 
 		} ?>
-		
-		<table>
+				
+		<table class="mcl_clean_head_table inside">
 			<tr>
-				<th>ジェネレーターを表示する</th>
+				<th><?php _e( 'Display meta tag generator', 'mcl_clean_head' ); ?></th>
 				<td>
 				<?php
-					$label = 'ジェネレーターを表示';
+					$label = __( 'Display meta tag generator', 'mcl_clean_head' );
 					$name = 'mcl_hc_generator';
 					mcl_clean_head_checkbox( $options, $label, $name);
 				?>	
 				</td>
 			</tr>
 			<tr>
-				<th>rsdxmlを表示する</th>
+				<th><?php _e( 'Display link tag EditURI', 'mcl_clean_head' ); ?></th>
 				<td>
 				<?php
-					$label = 'rsdxmlを表示';
+					$label = __( 'Display link tag EditURI application/rsd+xml', 'mcl_clean_head' );
 					$name = 'mcl_hc_rsdxml';
 					mcl_clean_head_checkbox( $options, $label, $name);
 				?>	
 				</td>
 			</tr>
 			<tr>
-				<th>wlwmanifestを表示する</th>
+				<th><?php _e( 'Display link tag wlwmanifest', 'mcl_clean_head' ); ?></th>
 				<td>
 				<?php
-					$label = 'wlwmanifestを表示';
+					$label = __( 'Display link tag wlwmanifest application/wlwmanifest+xml', 'mcl_clean_head' );;
 					$name = 'mcl_hc_wlwmanifest';
 					mcl_clean_head_checkbox( $options, $label, $name);
 				?>	
 				</td>
 			</tr>
 			<tr>
-				<th>rsdxmlを表示する</th>
+				<th><?php _e( 'Display link tag stylesheet for open-sans', 'mcl_clean_head' ); ?></th>
 				<td>
 				<?php
-					$label = 'opensansを表示';
+					$label = __( 'Display link tag stylesheet for open-sans', 'mcl_clean_head' );
 					$name = 'mcl_hc_opensans';
 					mcl_clean_head_checkbox( $options, $label, $name);
 				?>	
 				</td>
 			</tr>
 			<tr>
-				<th>rsdxmlを表示する</th>
+				<th><?php _e( 'Display style tag for recentcomments', 'mcl_clean_head' ); ?></th>
 				<td>
 				<?php
-					$label = 'comments_styleを表示';
+					$label = __( 'Display style tag for recentcomments', 'mcl_clean_head' );
 					$name = 'mcl_hc_comments_style';
 					mcl_clean_head_checkbox( $options, $label, $name);
 				?>	
 				</td>
 			</tr>
 			<tr>
-				<th>emojiを表示する</th>
+				<th><?php _e( 'Display style tag and script for emoji', 'mcl_clean_head' ); ?></th>
 				<td>
 				<?php
-					$label = 'emojiを表示';
+					$label = __( 'Display style tag and script for emoji', 'mcl_clean_head' );
 					$name = 'mcl_hc_print_emoji';
 					mcl_clean_head_checkbox( $options, $label, $name);
 				?>	
 				</td>
 			</tr>
 		</table>
-		
-		<p class="submit"><?php submit_button(); ?></p>
+		<?php submit_button(); ?>
 	</form>
+	</div>
 	</div>
 <?php 
 } // mcl_clean_head_admin
@@ -181,7 +200,8 @@ function mcl_head_clean_update(){
 				'mcl_hc_print_emoji' => $mcl_hc_print_emoji
 			);
 			update_option( 'mcl_head_clean_option', $array_options );
-						
+			
+			add_action('admin_notices', 'my_admin_notice');	
 			// リダイレクトして再度フォームが送信されるエラーを防ぐ
 			wp_safe_redirect( menu_page_url( 'mcl-clean-head', false ) );
 		}
@@ -189,9 +209,18 @@ function mcl_head_clean_update(){
 }
 
 /* -----------------------------------------------------------
+	保存しましたのメッセージ
+----------------------------------------------------------- */
+function my_admin_notice() { ?>
+    <div class="updated">
+        <p><?php _e( 'Updated!', 'mcl_clean_head' ); ?></p>
+    </div>
+<?php
+}
+
+/* -----------------------------------------------------------
 	フック処理
 ----------------------------------------------------------- */
-
 $options = get_option( 'mcl_head_clean_option' );
 
 // generator 標記の削除
