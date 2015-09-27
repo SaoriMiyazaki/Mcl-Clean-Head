@@ -2,7 +2,7 @@
 /* --------------------------------------------------------------
 Plugin Name: Mcl Clean head
 Plugin URI: http://memocarilog.info/
-Description: Clean tag in HTML head
+Description: This Plugin is clean of head tag in your theme. ( Remove → wp_generator meta tag / rsd link tag / wlwmanifest link tag / wp_open_sans style tag / recent_comments style tag / print_emoji's script and style tag )
 Text Domain: MclCleanHead
 Domain Path: /languages
 Version: 0.1
